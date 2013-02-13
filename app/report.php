@@ -57,17 +57,16 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 			echo "<p><img src='".$app2base."compound_images/$molregno.png' width='250' height='250'/></p>";
 			echo "<h5>Bioactivity data</h5>";
 			
-			$db = pg_connect("user=user dbname=chembl_14 host=/var/run/postgresql");
+			$db = pg_connect("user=user dbname=$db_name host=/var/run/postgresql");
  			if (!$db) {die("Error in connection: " . pg_last_error());}
 			
 			// execute query
- 			$sql = "SELECT a.assay_id, ac.standard_type, ac.relation, ac.standard_value, ac.standard_units, td.chembl_id FROM compound_records cr, molecule_dictionary md, 
-						target_dictionary td, assay2target a2t, assays a, activities ac WHERE 
+ 			$sql = "SELECT a.assay_id, ac.standard_type, ac.standard_relation, ac.standard_value, ac.standard_units, td.chembl_id FROM compound_records cr, molecule_dictionary md, 
+						target_dictionary td, assays a, activities ac WHERE 
 						md.molregno = cr.molregno AND 
 						cr.record_id = ac.record_id AND 
-						a2t.assay_id = a.assay_id AND 
-						a.assay_id = ac.assay_id AND 
-						td.tid = a2t.tid AND
+						ac.assay_id = a.assay_id AND 
+						td.tid = a.tid AND
 						ac.standard_type in ('IC50', 'Ki', 'EC50', 'Kd') AND
 						md.chembl_id='$query'";	
 						//a2t.confidence_score >= 7 AND
@@ -90,7 +89,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
  				}
 				else{
 					echo "<tr>";
-					echo "<td><a href='https://www.ebi.ac.uk/chembldb/assay/inspect/$row[assay_id]'>$row[assay_id]</a></td><td>$row[standard_type]<td>$row[relation]</td><td>$row[standard_value]</td><td>$row[standard_units]</td><td>
+					echo "<td><a href='https://www.ebi.ac.uk/chembldb/assay/inspect/$row[assay_id]'>$row[assay_id]</a></td><td>$row[standard_type]<td>$row[standard_relation]</td><td>$row[standard_value]</td><td>$row[standard_units]</td><td>
 					<a href='https://www.ebi.ac.uk/chembldb/target/inspect/$row[chembl_id]'>$row[chembl_id]</a></td>";
 					echo "</tr>";
 				}

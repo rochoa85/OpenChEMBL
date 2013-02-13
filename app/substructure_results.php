@@ -70,18 +70,25 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 			
 			//echo "<b>SUMMARY RESULTS</b> (max 10 results per page)<br/><br/>";
 			// execute query
- 			$sql = "SELECT DISTINCT mr.molregno,mr.m,md.chembl_id FROM mols_rdkit mr, molecule_dictionary md WHERE mr.m $searchOperator '$query'::$molformat AND mr.molregno=md.molregno";
+		$pagenum=$_GET["pagenum"];
+
+		if (empty($pagenum)){ 
+			$drop = "DROP TABLE IF EXISTS queryTemp";
+			$resDrop = pg_query($db, $drop);
+ 			$sql = "CREATE TABLE queryTemp AS SELECT DISTINCT mr.molregno,mr.m,md.chembl_id FROM mols_rdkit mr, molecule_dictionary md WHERE mr.m $searchOperator '$query'::$molformat AND mr.molregno=md.molregno";
  			$result = pg_query($db, $sql);
- 			if (!$result) {die("Error in SQL query: " . pg_last_error());}       
+ 			if (!$result) {die("Error in SQL query: " . pg_last_error());}
+			$pagenum = 1; 
+		}
 
-			$pagenum=$_GET["pagenum"];
+			$sqlCont = "SELECT count(*) FROM queryTemp";
+			$resultCont = pg_query($db,$sqlCont); 
+			if (!$resultCont) {die("Error in SQL query: " . pg_last_error());}      
 
-			if (empty($pagenum)){ 
-				$pagenum = 1; 
-			}
 			// Number of results
-			$rows = pg_num_rows($result);
-			$page_rows = 12;
+			$rowOne = pg_fetch_row($resultCont);
+			$rows = $rowOne[0];
+			$page_rows = 13;
 			$last = ceil($rows/$page_rows);
 			if ($pagenum < 1){ 
 				$pagenum = 1; 
@@ -92,7 +99,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 			//This sets the range to display in our query 
 			$max = 'LIMIT ' .$page_rows." OFFSET ".($pagenum-1)*$page_rows;
 			
-			$sql_p = "SELECT DISTINCT mr.molregno,mr.m,md.chembl_id FROM mols_rdkit mr, molecule_dictionary md WHERE mr.m $searchOperator '$query'::$molformat AND mr.molregno=md.molregno $max";
+			$sql_p = "SELECT DISTINCT molregno,m,chembl_id FROM queryTemp $max";
  			$result_p = pg_query($db, $sql_p);
  			if (!$result_p) {die("Error in SQL query: " . pg_last_error());}     			
 			
@@ -121,7 +128,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 					$sqlImage= "SELECT lo_export(mol_pictures.image,'".$basedir."compound_images/$row[molregno].png') from mol_pictures where molregno=$row[molregno]";										
 					pg_query($db,$sqlImage);
 					
-					if ($cont <= 5){
+					if ($cont <= 6){
 					//echo "<td><a href='https://www.ebi.ac.uk/chembldb/compound/inspect/$row[chembl_id]'>$row[chembl_id]</a></td><td>
 					//<img src='https://www.ebi.ac.uk/chembldb/compound/displayimage/$row[molregno]'/></td>";
 						echo "<td><img src='".$app2base."compound_images/$row[molregno].png' width='150' height='150'/><br/>

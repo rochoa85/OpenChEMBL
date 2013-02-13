@@ -22,7 +22,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
   
   # Database Settings
   $db_user = "user"; 
-  $db_name = "chembl_14";
+  $db_name = "chembl_15";
   $db_host = "/var/run/postgresql";
   $db_port = 5432;  
 ?>

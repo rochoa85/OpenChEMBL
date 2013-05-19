@@ -13,7 +13,12 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 
 <? include_once("functions.php"); ?>
 
-<? include "header.php"; ?> 
+<? include "header.php"; ?>
+
+<?
+// Starting a new session
+session_start();
+?>
 
     <div id="content" role="main" class="grid_24 clearfix">
     		   
@@ -72,16 +77,17 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 			// execute query
 		$pagenum=$_GET["pagenum"];
 
-		if (empty($pagenum)){ 
-			$drop = "DROP TABLE IF EXISTS queryTemp";
-			$resDrop = pg_query($db, $drop);
- 			$sql = "CREATE TABLE queryTemp AS SELECT DISTINCT mr.molregno,mr.m,md.chembl_id FROM mols_rdkit mr, molecule_dictionary md WHERE mr.m $searchOperator '$query'::$molformat AND mr.molregno=md.molregno";
- 			$result = pg_query($db, $sql);
- 			if (!$result) {die("Error in SQL query: " . pg_last_error());}
+		if (empty($pagenum)){
+                        $_SESSION['tmp_table_sss'] = sss($searchOperator, $query, $molformat);
+                        deleteTmpTables();
+			//$resDrop = pg_query($db, $drop);
+ 			//$sql = "CREATE TABLE ".$_SESSION['tmp_table_sss']." AS SELECT DISTINCT mr.molregno,mr.m,md.chembl_id FROM mols_rdkit mr, molecule_dictionary md WHERE mr.m $searchOperator '$query'::$molformat AND mr.molregno=md.molregno";
+ 			//$result = pg_query($db, $sql);
+ 			//if (!$result) {die("Error in SQL query: " . pg_last_error());}
 			$pagenum = 1; 
 		}
 
-			$sqlCont = "SELECT count(*) FROM queryTemp";
+			$sqlCont = "SELECT count(*) FROM ".$_SESSION['tmp_table_sss'];
 			$resultCont = pg_query($db,$sqlCont); 
 			if (!$resultCont) {die("Error in SQL query: " . pg_last_error());}      
 
@@ -99,7 +105,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 			//This sets the range to display in our query 
 			$max = 'LIMIT ' .$page_rows." OFFSET ".($pagenum-1)*$page_rows;
 			
-			$sql_p = "SELECT DISTINCT molregno,m,chembl_id FROM queryTemp $max";
+			$sql_p = "SELECT DISTINCT molregno,m,chembl_id FROM ".$_SESSION['tmp_table_sss']." $max";
  			$result_p = pg_query($db, $sql_p);
  			if (!$result_p) {die("Error in SQL query: " . pg_last_error());}     			
 			

@@ -87,8 +87,17 @@ URL: http://www.opensource.org/licenses/apache2.0.php
  				$sql = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.torsionbv,torsionbv_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md 
  				where fr.torsionbv%torsionbv_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC";
 			}elseif($fingerprint=="Atom") {
- 				$sql = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.atompairbv,atompairbv_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md 
- 				where fr.atompairbv%atompairbv_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC";
+ 				$sql = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.atombv,atompairbv_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md 
+ 				where fr.atombv%atompairbv_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC";
+ 			}elseif($fingerprint=="RDKit") {
+ 				$sql = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.rdkfp,rdkit_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md 
+ 				where fr.rdkfp%rdkit_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC";
+ 			}elseif($fingerprint=="Layered") {
+ 				$sql = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.layeredfp,layered_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md 
+ 				where fr.layeredfp%layered_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC";
+ 			}elseif($fingerprint=="MACCS") {
+ 				$sql = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.maccsfp,maccs_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md 
+ 				where fr.maccsfp%maccs_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC";
  			}
  			
  			
@@ -123,8 +132,17 @@ URL: http://www.opensource.org/licenses/apache2.0.php
  				$sql_p = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.torsionbv,torsionbv_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md  
  				where fr.torsionbv%torsionbv_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC $max";
 			}elseif($fingerprint=="Atom") {
- 				$sql_p = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.atompairbv,atompairbv_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md  
- 				where fr.atompairbv%atompairbv_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC $max";
+ 				$sql_p = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.atombv,atompairbv_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md  
+ 				where fr.atombv%atompairbv_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC $max";
+ 			}elseif($fingerprint=="RDKit") {
+ 				$sql_p = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.rdkfp,rdkit_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md  
+ 				where fr.rdkfp%rdkit_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC $max";
+ 			}elseif($fingerprint=="Layered") {
+ 				$sql_p = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.layeredfp,layered_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md  
+ 				where fr.layeredfp%layered_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC $max";
+ 			}elseif($fingerprint=="MACCS") {
+ 				$sql_p = "SELECT DISTINCT mr.molregno,mr.m,$sim_query(fr.maccsfp,maccs_fp('$query'::mol)) sim, md.chembl_id FROM mols_rdkit mr, fps_rdkit fr, molecule_dictionary md  
+ 				where fr.maccsfp%maccs_fp('$query'::mol) and mr.molregno=md.molregno and mr.molregno=fr.molregno ORDER BY sim DESC $max";
  			}
 			
 			$result_p = pg_query($db, $sql_p);			
@@ -155,10 +173,6 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 						$simScore=round($row[sim],2);
 						$sqlImage= "SELECT lo_export(mol_pictures.image,'".$basedir."compound_images/$row[molregno].png') from mol_pictures where molregno=$row[molregno]";										
 						pg_query($db,$sqlImage);
-					
-						//echo "<td><a href='https://www.ebi.ac.uk/chembldb/compound/inspect/$row[chembl_id]'>$row[chembl_id]</a></td><td>
-						//<img src='https://www.ebi.ac.uk/chembldb/compound/displayimage/$row[molregno]'/></td><td>$simScore</td>";
-						//echo "<td><a href='https://www.ebi.ac.uk/chembldb/compound/inspect/$row[chembl_id]'>$row[chembl_id]</a></td><td>
 						echo "<td><img src='".$app2base."compound_images/$row[molregno].png' width='150' height='150'/><br/>
 						<a href='report.php?id=$row[chembl_id]'>$row[chembl_id]</a><br/>
 						Similarity: $simScore<br/></td>";

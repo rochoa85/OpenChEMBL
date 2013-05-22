@@ -63,8 +63,17 @@ function similarity($moltest, $finger, $method)
 		$fp="torsionbv";
 		$fpTech="torsionbv_fp";
 	}elseif($finger=="Atom") {
-		$fp="atompairbv";
+		$fp="atombv";
 		$fpTech="atompairbv_fp";
+	}elseif($finger=="RDKit") {
+		$fp="rdkfp";
+		$fpTech="rdkit_fp";
+	}elseif($finger=="Layered") {
+		$fp="layeredfp";
+		$fpTech="layered_fp";
+	}elseif($finger=="MACCS") {
+		$fp="maccsfp";
+		$fpTech="maccs_fp";
 	}
 	
 	// Section to select the method
@@ -153,7 +162,10 @@ function properties($query)
  	
  	$sql = "SELECT mol_amw('$query') as amw, mol_logp('$query') as logp, mol_hba('$query') as hba, mol_hbd('$query') as hbd, mol_numatoms('$query') as numatoms, 
  					mol_numheavyatoms('$query') as numheavyatoms, mol_numrotatablebonds('$query') as numrotatablebonds, mol_numheteroatoms('$query') as numheteroatoms, 
- 					mol_numrings('$query') as numrings, mol_tpsa('$query') as tpsa";
+ 					mol_numrings('$query') as numrings, mol_tpsa('$query') as tpsa, mol_numaromaticrings('$query') as numaromarings, mol_numaliphaticrings('$query') as numalipharings,
+ 					mol_numsaturatedrings('$query') as numsaturarings,mol_numaromaticheterocycles('$query') as numaromahet,mol_numaliphaticheterocycles('$query') as numaliphahet,
+ 					mol_numsaturatedheterocycles('$query') as numsaturahet,mol_numaromaticcarbocycles('$query') as numaromacarbo,mol_numaliphaticcarbocycles('$query') as numaliphacarbo,
+ 					mol_numsaturatedcarbocycles('$query') as numsaturacarbo,mol_fractioncsp3('$query') as fracsp3";
  				
  	$result = pg_query($db, $sql);
  	if (!$result) {die("Error in SQL query: " . pg_last_error());}
@@ -164,12 +176,16 @@ function properties($query)
  			//echo '<center><b>No Results, please search again</b></center>';
  			$info = array("Molecular Weight" => "NO", "LogP" => "NO", "Lipinski H-Bond Acceptors" => "NO", "Lipinski H-Bond Donors" => "NO",
  			"Number of atoms" => "NO", "Number of heavy atoms" => "NO", "Number of rotatable bonds" => "NO", "Number of Heteroatoms" => "NO",
- 			"Number of Rings" => "NO", "Topological Polar Surface Area" => "NO");
+ 			"Number of Rings" => "NO", "Topological Polar Surface Area" => "NO","Number of Aromatic Rings" => "NO","Number of Aliphatic Rings" => "NO","Number of Saturated Rings" => "NO",
+ 			"Number of Aromatic Heterocycles" => "NO","Number of Aliphatic Heterocycles" => "NO","Number of Saturated Heterocycles" => "NO","Number of Aromatic Carbocycles" => "NO","Number of Aliphatic Carbocycles" => "NO",
+ 			"Number of Saturated Carbocycles" => "NO","Fraction of carbons sp3 hybridized" => "NO");
  		}
  		else{
  			$info = array("Molecular Weight" => "$row[amw]", "LogP" => "$row[logp]", "Lipinski H-Bond Acceptors" => "$row[hba]", "Lipinski H-Bond Acceptors" => "$row[hba]", "Lipinski H-Bond Donors" => "$row[hbd]",
  			"Number of atoms" => "$row[numatoms]", "Number of heavy atoms" => "$row[numheavyatoms]", "Number of rotatable bonds" => "$row[numrotatablebonds]", "Number of Heteroatoms" => "$row[numheteroatoms]",
- 			"Number of Rings" => "$row[numrings]", "Topological Polar Surface Area" => "$row[tpsa]");
+ 			"Number of Rings" => "$row[numrings]", "Topological Polar Surface Area" => "$row[tpsa]","Number of Aromatic Rings" => "$row[numaromarings]","Number of Aliphatic Rings" => "$row[numalipharings]","Number of Saturated Rings" => "$row[numsaturarings]",
+ 			"Number of Aromatic Heterocycles" => "$row[numaromahet]","Number of Aliphatic Heterocycles" => "$row[numaliphahet]","Number of Saturated Heterocycles" => "$row[numsaturahet]","Number of Aromatic Carbocycles" => "$row[numaromacarbo]","Number of Aliphatic Carbocycles" => "$row[numaliphacarbo]",
+ 			"Number of Saturated Carbocycles" => "$row[numsaturacarbo]","Fraction of carbons sp3 hybridized" => "$row[fracsp3]");
  			//echo "<b>Molecule:</b> " . $row[m] . "<br/>";
  		}
  		array_push($total, $info);

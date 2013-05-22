@@ -108,7 +108,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
     	     <h3>Similarity Search</h3>    			
              <p>
              In this section the user can run similarity searches, selecting different class of fingerprints, and select between similarity coefficients. The input formats are SMILES strings, SMARTS queries or MOL files stored in your computer.
-				<br/><b>NOTE:</b> The Atom-Pair fingerprint is disabled at the moment.
+					<br/><b>NOTE:</b> The Layered fingerprint is experimental and takes a lot of time for running.				 
 				 <br/><br/>            
              <b>Select one option:</b><br/> 
 				<input type="radio" name="chemblSim" id="chemblSim1" value="Yes" onchange="Sim();"/> Draw your structure <br/>
@@ -143,6 +143,9 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 						<option value="MorganFeat" class="listheader">Morgan features</option>
 						<option value="Torsion" class="listheader">Topological-Torsion</option>
 						<option value="Atom" class="listheader">Atom-Pair</option>
+						<option value="RDKit" class="listheader">RDKit</option>
+						<option value="Layered" class="listheader">Layered (exp)</option>
+						<option value="MACCS" class="listheader">MACCS</option>
 					</select><br/><br/>
 					2. Select one similarity coefficient (Tanimoto by default): 
 					<select name="similarity" id="similarity">
@@ -174,6 +177,9 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 						<option value="MorganFeat" class="listheader">Morgan features</option>
 						<option value="Torsion" class="listheader">Topological-Torsion</option>
 						<option value="Atom" class="listheader">Atom-Pair</option>
+						<option value="RDKit" class="listheader">RDKit</option>
+						<option value="Layered" class="listheader">Layered (exp)</option>
+						<option value="MACCS" class="listheader">MACCS</option>
 					</select><br/><br/>
 					3. Select one similarity coefficient (Tanimoto by default): 
 					<select name="similarity" id="similarity">

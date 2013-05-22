@@ -38,38 +38,38 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 						$localIP = "localhost";	
 					}
 				}
-				echo "Example: <a href='http://$localIP/rest/api_chembl.php?action=substructure&smiles=CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21&type=exact'>
-				http://$localIP/rest/api_chembl.php?action=substructure&smiles=CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21&type=exact</a>";
+				echo "Example: <a href='http://$localIP/openchembl/rest/api_chembl.php?action=substructure&smiles=CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21&type=exact'>
+				http://$localIP/openchembl/rest/api_chembl.php?action=substructure&smiles=CC1=CC(C)(C)Nc2cc3oc(=O)cc(C(F)(F)F)c3cc21&type=exact</a>";
 				?>
              </p>    	     
     	     
     	     <h5>SMARTS Based</h5>
     	     <p>
     	     <?
-				echo "Example: <a href='http://$localIP/rest/api_chembl.php?action=substructure&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]&type=subs'>
-				http://$localIP/rest/api_chembl.php?action=substructure&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]&type=subs</a>";
+				echo "Example: <a href='http://$localIP/openchembl/rest/api_chembl.php?action=substructure&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]&type=subs'>
+				http://$localIP/openchembl/rest/api_chembl.php?action=substructure&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]&type=subs</a>";
 				?> 
              </p>    	
 
     	     <h3>Similarity Searches</h3>    			
 				<p>
 				In this section you can find examples to run a simple URI query to retrieve similarity searches, selecting different class of fingerprints and similarity coefficients.<br/>
-				<b>Categories:</b> action, smiles, smarts, fingerprint (Morgan, MorganFeat, Torsion, Atom-Pair), 	method (Tanimoto, Dice).				
+				<b>Categories:</b> action, smiles, smarts, fingerprint (Morgan, MorganFeat, Torsion, Atom, RDKit, Layered, MACCS), 	method (Tanimoto, Dice).				
 				</p>
 				
 				<h5>SMILES Based</h5>
     	     	<p>
     	     	<?
-    	     	echo "Example: <a href='http://$localIP/rest/api_chembl.php?action=similarity&smiles=C(=O)C1=CCnCC1&fingerprint=MorganFeat&method=Dice'>
-			http://$localIP/rest/api_chembl.php?action=similarity&smiles=C(=O)C1=CCnCC1&fingerprint=MorganFeat&method=Dice</a>";
+    	     	echo "Example: <a href='http://$localIP/openchembl/rest/api_chembl.php?action=similarity&smiles=C(=O)C1=CCnCC1&fingerprint=MACCS&method=Dice'>
+			http://$localIP/openchembl/rest/api_chembl.php?action=similarity&smiles=C(=O)C1=CCnCC1&fingerprint=MACCS&method=Dice</a>";
     	     	?>
     	     	</p>				
 				
 				<h5>SMARTS Based</h5>
     	     	<p>
     	     <?
-					echo "Example: <a href='http://$localIP/rest/api_chembl.php?action=similarity&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]&fingerprint=Morgan&method=Tanimoto'>
-					http://$localIP/rest/api_chembl.php?action=similarity&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]&fingerprint=Morgan&method=Tanimoto</a>";
+					echo "Example: <a href='http://$localIP/openchembl/rest/api_chembl.php?action=similarity&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]&fingerprint=Morgan&method=Tanimoto'>
+					http://$localIP/openchembl/rest/api_chembl.php?action=similarity&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]&fingerprint=Morgan&method=Tanimoto</a>";
 			?>
     	     	</p>				
 				
@@ -82,16 +82,16 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 				<h5>SMILES Based</h5>
     	     	<p>
     	     	<?
-    	     	echo "Example: <a href='http://$localIP/rest/api_chembl.php?action=properties&smiles=C(=O)C1=CCnCC1'>
-			http://$localIP/chembl/rest/api_chembl.php?action=properties&smiles=C(=O)C1=CCnCC1</a>";
+    	     	echo "Example: <a href='http://$localIP/openchembl/rest/api_chembl.php?action=properties&smiles=C(=O)C1=CCnCC1'>
+			http://$localIP/openchembl/rest/api_chembl.php?action=properties&smiles=C(=O)C1=CCnCC1</a>";
     	     	?>
     	     	</p>
              
    			<h5>SMARTS Based</h5>
     	     	<p>
     	     	<?
-    	     echo "Example: <a href='http://$localIP/rest/api_chembl.php?action=properties&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]'>
-			http://$localIP/chembl/rest/api_chembl.php?action=properties&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]</a>";
+    	     echo "Example: <a href='http://$localIP/openchembl/rest/api_chembl.php?action=properties&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]'>
+			http://$localIP/openchembl/rest/api_chembl.php?action=properties&smarts=[%236;X4]-1-[%236](=[%238])-[%237]-[%237]-[%236]-1=[%238]</a>";
     	     	?>
     	     	</p>
     	     	
@@ -138,7 +138,7 @@ smarts=translateURI(smarts)
 print "Results from SMILES ..."
 
 # NOTE: The localhost must be changed by the current IP
-substructure_data = json.loads(urllib2.urlopen("http://localhost/rest/api_chembl.php?\
+substructure_data = json.loads(urllib2.urlopen("http://localhost/openchembl/rest/api_chembl.php?\
 action=substructure&smiles=%s&type=%s" % (smiles,typeQuery)).read())
 
 # Printing the records
@@ -154,7 +154,7 @@ for record in substructure_data:
 print "Results from SMARTS ..."
 
 # NOTE: The localhost must be changed by the current IP
-similarity_data = json.loads(urllib2.urlopen("http://localhost/rest/api_chembl.php?\
+similarity_data = json.loads(urllib2.urlopen("http://localhost/openchembl/rest/api_chembl.php?\
 action=similarity&smarts=%s&fingerprint=%s&method=%s" % (smarts,fingerprint,method)).read())
 
 for record in similarity_data:
@@ -169,7 +169,7 @@ for record in similarity_data:
 print "Results from SMILES ..."
 
 # NOTE: The localhost must be changed by the current IP
-properties_data = json.loads(urllib2.urlopen("http://localhost/rest/api_chembl.php?\
+properties_data = json.loads(urllib2.urlopen("http://localhost/openchembl/rest/api_chembl.php?\
 action=properties&smiles=%s" % (smiles)).read())
 
 # Printing the records
@@ -185,6 +185,16 @@ for record in properties_data:
     print "Number of Heteroatoms: %s" % record['Number of Heteroatoms']
     print "Number of Rings: %s" % record['Number of Rings']
     print "Topological Polar Surface Area: %s" % record['Topological Polar Surface Area']
+    print "Number of Aromatic Rings: %s" % record['Number of Aromatic Rings']
+    print "Number of Aliphatic Rings: %s" % record['Number of Aliphatic Rings']
+    print "Number of Saturated Rings: %s" % record['Number of Saturated Rings']
+    print "Number of Aromatic Heterocycles: %s" % record['Number of Aromatic Heterocycles']
+    print "Number of Aliphatic Heterocycles: %s" % record['Number of Aliphatic Heterocycles']
+    print "Number of Saturated Heterocycles: %s" % record['Number of Saturated Heterocycles']
+    print "Number of Aromatic Carbocycles: %s" % record['Number of Aromatic Carbocycles']
+    print "Number of Aliphatic Carbocycles: %s" % record['Number of Aliphatic Carbocycles']
+    print "Number of Saturated Carbocycles: %s" % record['Number of Saturated Carbocycles']
+    print "Fraction of carbons sp3 hybridized: %s" % record['Fraction of carbons sp3 hybridized']
     print
 			</code></pre>
 			</div>

@@ -2,6 +2,70 @@
 // Some extra JavaScript functions
 /////////////////////////////////////////////////////////
 
+$(document).ready(function() {
+	//$("input[name=chembl]:radio").attr("checked", false);
+	//$("input[name=chemblSim]:radio").attr("checked", false);
+	
+	$("#structure-search-type option:first").attr('selected', 'selected' );
+	$("#substructure-search-input option:first").attr('selected', 'selected' );
+	$("#similarity-search-input option:first").attr('selected', 'selected' );
+	
+	$('#substructure-input-div').hide();
+	$('#similarity-input-div').hide();
+	
+	$('#structure-search-type').change(function(){
+		if(this.value === 'sub'){
+			$('#substructure-input-div').show();
+			$('#similarity-input-div').hide();			
+		} else if(this.value === 'sim'){
+			$('#substructure-input-div').hide();
+			$('#similarity-input-div').show();			
+		}
+	})
+
+	$('#substructure-search-input').change(function(){
+		if(this.value === 'substructure-draw'){
+	  		document.getElementById("marvin").style.display="block";
+	  		document.getElementById("entrada").style.display="none";
+	  		document.getElementById("stringMOL").style.display="none";
+			document.getElementById("stringSMARTS").style.display="none";
+			document.getElementById("stringSMILES").style.display="none";		
+		} else if(this.value === 'substructure-upload'){
+	  		document.getElementById("marvin").style.display="none";
+	  		document.getElementById("entrada").style.display="block";		
+		}
+	})
+	
+	$('#similarity-search-input').change(function(){
+		if(this.value === 'similarity-draw'){
+	  		document.getElementById("marvinSim").style.display="block";
+	  		document.getElementById("entradaSim").style.display="none";
+	  		document.getElementById("stringMOLSim").style.display="none";
+			document.getElementById("stringSMARTSSim").style.display="none";
+			document.getElementById("stringSMILESSim").style.display="none";		
+		} else if(this.value === 'similarity-upload'){
+	  		document.getElementById("marvinSim").style.display="none";
+	  		document.getElementById("entradaSim").style.display="block";		
+		}
+	})
+	
+	$("#property-input option:first").attr('selected', 'selected' );	
+	
+	$('#property-input').change(function(){
+		if(this.value === 'property-draw'){
+	  		document.getElementById("marvinPro").style.display="block";
+	  		document.getElementById("entradaPro").style.display="none";
+	  		document.getElementById("stringMOLPro").style.display="none";
+			document.getElementById("stringSMARTSPro").style.display="none";
+			document.getElementById("stringSMILESPro").style.display="none";		
+		} else if(this.value === 'property-upload'){
+	  		document.getElementById("marvinPro").style.display="none";
+	  		document.getElementById("entradaPro").style.display="block";		
+		}
+	})
+});
+
+
 function despliegaInformacion(divinfo,pagina)
 {
 	var x=new XMLHttpRequest();
@@ -39,6 +103,30 @@ function string(){
 		document.getElementById("stringSMILES").style.display="none";
 	}
 }
+
+function stringPro(){
+	if(document.getElementById("format").value=="SMILES"){
+		document.getElementById("stringSMILESPro").style.display="block";
+		document.getElementById("stringSMARTSPro").style.display="none";
+		document.getElementById("stringMOLPro").style.display="none";
+	}
+	else if(document.getElementById("format").value=="ARTS"){	
+		document.getElementById("stringSMARTSPro").style.display="block";
+		document.getElementById("stringMOLPro").style.display="none";
+		document.getElementById("stringSMILESPro").style.display="none";	
+	}
+	else if(document.getElementById("format").value=="MOL"){
+		document.getElementById("stringMOLPro").style.display="block";
+		document.getElementById("stringSMARTSPro").style.display="none";
+		document.getElementById("stringSMILESPro").style.display="none";
+	}
+	else if(document.getElementById("format").value=="None"){
+		document.getElementById("stringMOLPro").style.display="none";
+		document.getElementById("stringSMARTSPro").style.display="none";
+		document.getElementById("stringSMILESPro").style.display="none";
+	}
+}
+
 
 function Simstring(){
 	if(document.getElementById("formatSim").value=="SMILESSim"){
@@ -79,33 +167,6 @@ function python(){
 		document.getElementById("pycode").style.display="none";
 	}
 }
-
-function set(){
-	if(document.getElementById("chembl1").checked==true) {
-  		document.getElementById("marvin").style.display="block";
-  		document.getElementById("entrada").style.display="none";
-  		document.getElementById("stringMOL").style.display="none";
-		document.getElementById("stringSMARTS").style.display="none";
-		document.getElementById("stringSMILES").style.display="none";
-	}else if(document.getElementById("chembl2").checked==true) {
-  		document.getElementById("marvin").style.display="none";
-  		document.getElementById("entrada").style.display="block";
-	}
-}
-
-function Sim(){
-	if(document.getElementById("chemblSim1").checked==true) {
-  		document.getElementById("marvinSim").style.display="block";
-  		document.getElementById("entradaSim").style.display="none";
-  		document.getElementById("stringMOLSim").style.display="none";
-		document.getElementById("stringSMARTSSim").style.display="none";
-		document.getElementById("stringSMILESSim").style.display="none";
-	}else if(document.getElementById("chemblSim2").checked==true) {
-  		document.getElementById("marvinSim").style.display="none";
-  		document.getElementById("entradaSim").style.display="block";
-	}
-}
-
 
 function load(){
 	var Scr = new ActiveXObject("Scripting.FileSystemObject");

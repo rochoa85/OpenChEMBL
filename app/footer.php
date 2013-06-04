@@ -24,6 +24,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
   </div> 
 
   <!-- Sripts loaded at end of the page -->
+  <script defer src="<?=$app2base?>static/js/jquery-1.10.0.min.js"></script>  
   <script defer src="<?=$app2base?>static/js/section_display.js"></script>  
 
 </body>

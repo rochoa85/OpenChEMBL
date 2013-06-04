@@ -54,7 +54,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 			} 
 			echo "</p>";
 			echo "<h5>Structure</h5>";
-			echo "<p><img src='".$app2base."compound_images/$molregno.png' width='250' height='250'/></p>";
+			echo "<p><img src='dispatcher.php/molecule_image/$query' width='250' height='250'/></p>";
 			echo "<h5>Bioactivity data</h5>";
 			
 			$db = pg_connect("user=$db_user dbname=$db_name host=/var/run/postgresql");

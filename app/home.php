@@ -29,7 +29,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
             In order to achieve each of these goals we have created a Virtual Machine, which contains the following:
             </p>
             <ul>
-              <li>PostgreSQL version of the ChEMBL database (Release: ChEMBL_14).</li>
+              <li>PostgreSQL version of the ChEMBL database (Release: <?= $chembl_version ?>).</li>
               <li>The RDKit Chemical Cartridge, which is an open source software library and adds 'Chemical-Awareness' to a PostgreSQL database.</li>
               <li>A web application (this web application), which demonstrates some of the functionality of the RDKit Chemical Cartridge, such as chemical structure searching and chemical structure property calculations.*</li>
             </ul>

@@ -16,10 +16,16 @@ $(document).ready(function() {
 	$('#structure-search-type').change(function(){
 		if(this.value === 'sub'){
 			$('#substructure-input-div').show();
-			$('#similarity-input-div').hide();			
+			$('#similarity-input-div').hide();
+			document.getElementById("container").style.display="none";
+			document.getElementById("marvin").style.display="none";			
+			document.getElementById("marvinSim").style.display="none";			
 		} else if(this.value === 'sim'){
 			$('#substructure-input-div').hide();
-			$('#similarity-input-div').show();			
+			$('#similarity-input-div').show();
+			document.getElementById("container").style.display="none";
+			document.getElementById("marvin").style.display="none";			
+			document.getElementById("marvinSim").style.display="none";
 		}
 	})
 
@@ -29,10 +35,15 @@ $(document).ready(function() {
 	  		document.getElementById("entrada").style.display="none";
 	  		document.getElementById("stringMOL").style.display="none";
 			document.getElementById("stringSMARTS").style.display="none";
-			document.getElementById("stringSMILES").style.display="none";		
+			document.getElementById("stringSMILES").style.display="none";
+			document.getElementById("container").style.display="block";
+			document.getElementById("marvinSim").style.display="none";
+			
 		} else if(this.value === 'substructure-upload'){
 	  		document.getElementById("marvin").style.display="none";
-	  		document.getElementById("entrada").style.display="block";		
+	  		document.getElementById("entrada").style.display="block";
+	  		document.getElementById("container").style.display="none";
+	  		document.getElementById("marvinSim").style.display="none";
 		}
 	})
 	
@@ -42,10 +53,14 @@ $(document).ready(function() {
 	  		document.getElementById("entradaSim").style.display="none";
 	  		document.getElementById("stringMOLSim").style.display="none";
 			document.getElementById("stringSMARTSSim").style.display="none";
-			document.getElementById("stringSMILESSim").style.display="none";		
+			document.getElementById("stringSMILESSim").style.display="none";
+			document.getElementById("container").style.display="block";
+			document.getElementById("marvin").style.display="none";				
 		} else if(this.value === 'similarity-upload'){
 	  		document.getElementById("marvinSim").style.display="none";
-	  		document.getElementById("entradaSim").style.display="block";		
+	  		document.getElementById("entradaSim").style.display="block";
+	  		document.getElementById("container").style.display="none";
+	  		document.getElementById("marvin").style.display="none";
 		}
 	})
 	
@@ -57,12 +72,35 @@ $(document).ready(function() {
 	  		document.getElementById("entradaPro").style.display="none";
 	  		document.getElementById("stringMOLPro").style.display="none";
 			document.getElementById("stringSMARTSPro").style.display="none";
-			document.getElementById("stringSMILESPro").style.display="none";		
+			document.getElementById("stringSMILESPro").style.display="none";
+			document.getElementById("container").style.display="block";		
 		} else if(this.value === 'property-upload'){
 	  		document.getElementById("marvinPro").style.display="none";
-	  		document.getElementById("entradaPro").style.display="block";		
+	  		document.getElementById("entradaPro").style.display="block";
+	  		document.getElementById("container").style.display="none";		
 		}
 	})
+	
+	$("#assayCliffsearch option:first").attr('selected', 'selected' );	
+	
+	$('#assayCliffsearch').change(function(){
+		if(this.value === 'assayYes'){
+	  		document.getElementById("assayCliffform").style.display="block";		
+		} else if(this.value === 'assayNo'){
+	  		document.getElementById("assayCliffform").style.display="none";		
+		}
+	})
+	
+	$("#targetCliffsearch option:first").attr('selected', 'selected' );	
+	
+	$('#targetCliffsearch').change(function(){
+		if(this.value === 'targetYes'){
+	  		document.getElementById("targetCliffform").style.display="block";		
+		} else if(this.value === 'targetNo'){
+	  		document.getElementById("targetCliffform").style.display="none";		
+		}
+	})
+	
 });
 
 

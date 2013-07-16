@@ -10,7 +10,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 ===============
  */
 ?>
-
+<? include "functions.php"; ?>
 <? include "header.php"; ?> 
                
     <div id="content" role="main" class="grid_24 clearfix">
@@ -23,10 +23,6 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 				<br/><br/>
             <b>Select one option:</b><br/> 
             
-            <!--
-				<input type="radio" name="chembl" id="chembl1" value="Yes" onchange="set();"/> Draw your structure <br/>
-				<input type="radio" name="chembl" id="chembl2" value="No" onchange="set();"/> Input an string or a molfile stored in your computer
-				-->
 				<select id="property-input">
 					<option value="ignore">Please choose input type...</option>
 					<option value="property-draw">Draw structure</option>
@@ -35,29 +31,10 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 				</p>
 			
 				<div style="display:none; text-align:center;" id="marvinPro">
-		        <script type="text/javascript" SRC="<?=$app2base?>applets/marvin/marvin.js"></script>
-					<script type="text/javascript">
-	        			msketch_name="MSketch";
-						msketch_begin("<?=$app2base?>/applets/marvin", 540, 480);
-						msketch_end();
-						function exportMol(format) {
-	               	if(document.MSketch != null) {
-	                  	var s = document.MSketch.getMol(format);
-	                     // Convert "\n" to local line separator
-	                    	s = unix2local(s);
-	                    	document.getElementById("marSmarts").value = s;
-	                	}else {
-	                		alert("Cannot import molecule:\n"+"no JavaScript to Java communication"+"in your browser.\n");
-	                	}
-	        			}
-										
-					</script>
-					<br/><a href="http://www.chemaxon.com/"><img src="<?=$app2base?>/static/images/app/freeweb-150.gif" width="138" height="30" border="0" style="vertical-align:top" /></a>
-					<form name="marSketch" method="get" action="property_results.php" class="formulario">
-						<input type="text" style="display:none" id="marSmarts" name="chemical" size="50"><br/><br/>
-						<input type="hidden" name="format" value="SMARTS"/>					
-						<input TYPE="submit" align="left" VALUE="Calculate" onClick="exportMol('smarts:u');">
-					</form>
+		      	<?
+						$category="property";
+						jsmeDraw($category);
+					?>
       		</div>
 			
 				<div style="display:none" id="entradaPro">

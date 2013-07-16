@@ -10,12 +10,13 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 ===============
 */
 ?>
-
+<? include "functions.php"; ?>
 <? include "header.php"; ?>
 
 <div id="content" role="main" class="grid_24 clearfix">
 
 	<section>
+	
 		<h2>Structure Search</h2>
 		<p>
 			The section of the Open ChEMBL system allows users to conduct a
@@ -28,6 +29,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 			</select>
 		</p>
 
+	
 		<!-- Substructure Start -->
 		<div id="substructure-input-div">
 			<h3>Substructure Search</h3>
@@ -44,46 +46,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 					<option value="substructure-upload">Upload file</option>
 				</select>
 			</p>
-			<div style="display: none; text-align: center;" id="marvin">
-				<script type="text/javascript"
-					SRC="<?=$app2base?>applets/marvin/marvin.js"></script>
-				<script type="text/javascript">
-	        			msketch_name="MSketchSub";
-						msketch_begin("<?=$app2base?>applets/marvin", 540, 480);
-						msketch_end();
-						function exportMolSub(format) {
-	               	if(document.MSketchSub != null) {
-	               		if(document.getElementById("exSub").checked==true){
-	               			
-									format="smiles:u";
-									document.getElementById("formSpecialSub").value = "SMILES";               		
-	               		}
-	                  	var s = document.MSketchSub.getMol(format);
-	                     // Convert "\n" to local line separator
-	                   
-	                    	s = unix2local(s);
-	                    	document.getElementById("marSmartsSub").value = s;
-	                	}else {
-	                		alert("Cannot import molecule:\n"+"no JavaScript to Java communication"+"in your browser.\n");
-	                	}
-	        			}
-										
-					</script>
-				<br /> <a href="http://www.chemaxon.com/"><img
-					src="<?=$app2base?>static/images/app/freeweb-150.gif" width="138"
-					height="30" border="0" style="vertical-align: top" /> </a>
-				<form name="marSketchSub" method="get"
-					action="substructure_results.php" class="formulario">
-					<input type="text" style="display: none" id="marSmartsSub"
-						name="chemical" size="50"><br /> <br /> 1. Select one kind of
-					search: <input type="radio" name="match" checked="checked"
-						id="subSub" value="subs" /> Substructure <input type="radio"
-						name="match" id="exSub" value="exact" /> Exact <br /> <br /> <input
-						type="hidden" name="format" id="formSpecialSub" value="SMARTS" />
-					<input TYPE="submit" align="left" VALUE="Search"
-						onClick="exportMolSub('smarts:u');">
-				</form>
-			</div>
+			
 
 			<div style="display: none" id="entrada">
 				<p>
@@ -159,50 +122,6 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 					<option value="similarity-upload">Upload file</option>
 				</select>				
 			</p>
-
-			<div style="display: none; text-align: center;" id="marvinSim">
-				<script type="text/javascript"
-					SRC="<?=$app2base?>applets/marvin/marvin.js"></script>
-				<script type="text/javascript">
-        			msketch_name="MSketch";
-					msketch_begin("<?=$app2base?>applets/marvin", 540, 480);
-					msketch_end();
-					function exportMol(format) {
-               	if(document.MSketch != null) {
-                  	var s = document.MSketch.getMol(format);
-                     // Convert "\n" to local line separator
-                    
-                    	s = unix2local(s);
-                    	document.getElementById("marSmartsSim").value = s;
-                	}else {
-                		alert("Cannot import molecule:\n"+"no JavaScript to Java communication"+"in your browser.\n");
-                	}
-        			}
-									
-				</script>
-				<br /> <a href="http://www.chemaxon.com/"><img
-					src="<?=$app2base?>/static/images/app/freeweb-150.gif" width="138"
-					height="30" border="0" style="vertical-align: top" /> </a>
-				<form name="marSketchSim" method="get"
-					action="similarity_results.php" class="formulario">
-					<input type="text" style="display: none" id="marSmartsSim"
-						name="chemical" size="50"><br /> <br /> 1. Select one kind of
-					fingerprints (Morgan (ECFP-like) by default): <select
-						name="fingerprint" id="fingerprint">
-						<option value="Morgan" selected="selected" class="listheader">Morgan</option>
-						<option value="MorganFeat" class="listheader">Morgan features</option>
-						<option value="Torsion" class="listheader">Topological-Torsion</option>
-						<option value="Atom" class="listheader">Atom-Pair</option>
-						<option value="MACCS" class="listheader">MACCS</option>
-					</select><br /> <br /> 2. Select one similarity coefficient
-					(Tanimoto by default): <select name="similarity" id="similarity">
-						<option value="Tanimoto" selected="selected" class="listheader">Tanimoto</option>
-						<option value="Dice" class="listheader">Dice</option>
-					</select><br /> <br /> <input type="hidden" name="format"
-						value="SMARTS" /> <input TYPE="submit" align="left" VALUE="Search"
-						onClick="exportMol('smarts:u');">
-				</form>
-			</div>
 
 			<div style="display: none" id="entradaSim">
 				<p>
@@ -285,6 +204,39 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 
 		<!-- Similarity End -->
 
+		<? jsme(); ?>
+		<div style="display: none; text-align: center;" id="marvin">
+				<form name='jsmeSketchSub' method='get' action='substructure_results.php' class='formulario'>
+				<input type='text' style='display: none' id='jsmeSmartsSub' name='chemical' size='50'>
+				<br/>1. Select one kind of search: 
+				<input type='radio' name='match' checked='checked' id='subSub' value='subs' /> Substructure
+				<input type='radio' name='match' id='exSub' value='exact' /> Exact <br/> <br/>
+				<input type='hidden' name='format' value='SMILES'/>
+				<input TYPE='submit' align='left' VALUE='Search' onClick='getSmilesSub();'>
+				</form>
+		</div>
+		
+		<div style="display:none; text-align: center;" id="marvinSim">
+				<form name='jsmeSketchSim' method='get' action='similarity_results.php' class='formulario'>
+					<input type='text' style='display: none' id='jsmeSmartsSim' name='chemical' size='50'>
+					<br/>1. Select one kind of fingerprints (Morgan (ECFP-like) by default): 
+					<select
+						name='fingerprint' id='fingerprint'>
+						<option value='Morgan' selected='selected' class='listheader'>Morgan</option>
+						<option value='MorganFeat' class='listheader'>Morgan features</option>
+						<option value='Torsion' class='listheader'>Topological-Torsion</option>
+						<option value='Atom' class='listheader'>Atom-Pair</option>
+						<option value='MACCS' class='listheader'>MACCS</option>
+					</select>
+					<br/><br/> 2. Select one similarity coefficient (Tanimoto by default): 
+					<select name='similarity' id='similarity'>
+						<option value='Tanimoto' selected='selected' class='listheader'>Tanimoto</option>
+						<option value='Dice' class='listheader'>Dice</option>
+					</select>
+					<input type='hidden' name='format' value='SMILES'/>
+					<br/><br/><input TYPE='submit' align='left' VALUE='Search' onClick='getSmilesSim();'>
+				</form>
+		</div>
 	</section>
 
 </div>

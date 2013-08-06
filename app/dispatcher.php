@@ -48,7 +48,6 @@ function dispatch(){
 	
 	$action_function = $routes[$action];
 	$action_function($params);
-
 }
 
 // Move along nothing to see here

@@ -10,13 +10,14 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 ===============
 */
 ?>
-<? include "functions.php"; ?>
+
 <? include "header.php"; ?>
+
+<script type="text/javascript" src="<?=$app2base?>static/js/jsme/jsme.nocache.js"></script>    
 
 <div id="content" role="main" class="grid_24 clearfix">
 
 	<section>
-	
 		<h2>Structure Search</h2>
 		<p>
 			The section of the Open ChEMBL system allows users to conduct a
@@ -29,7 +30,6 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 			</select>
 		</p>
 
-	
 		<!-- Substructure Start -->
 		<div id="substructure-input-div">
 			<h3>Substructure Search</h3>
@@ -46,7 +46,23 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 					<option value="substructure-upload">Upload file</option>
 				</select>
 			</p>
-			
+			<div style="display:none; text-align:center;" id="substructure_section">
+            
+                <div id="struct_sketch_sub"></div>
+            
+				<form name="marSketchSub" method="get"
+					action="substructure_results.php" class="formulario">
+					<input type="text" style="display: none" id="marSmartsSub"
+						name="chemical" size="50"><br /> <br /> 1. Select one kind of
+					search: <input type="radio" name="match" checked="checked"
+						id="subSub" value="subs" /> Substructure <input type="radio"
+						name="match" id="exSub" value="exact" /> Exact <br /> <br /> <input
+						type="hidden" name="format" id="formSpecialSub" value="SMARTS" />
+					<input TYPE="submit" align="left" VALUE="Search"
+						onClick="export_mol('sub');">
+				</form>
+				
+			</div>
 
 			<div style="display: none" id="entrada">
 				<p>
@@ -112,8 +128,9 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 				In this section the user can run similarity searches, selecting
 				different class of fingerprints, and select between similarity
 				coefficients. The input formats are SMILES strings, SMARTS queries
-				or MOL files stored in your computer. <br /> 
-				
+				or MOL files stored in your computer. <br /> <b>NOTE:</b> The
+				Layered fingerprint is experimental and takes a lot of time for
+				running. 
 				<br /> 
 				<br /> 
 				<select id="similarity-search-input">
@@ -122,6 +139,33 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 					<option value="similarity-upload">Upload file</option>
 				</select>				
 			</p>
+
+			<div style="display: none; text-align: center;" id="similarity_section">
+	
+	            <div id="struct_sketch_sim"></div>
+	
+				<form name="marSketchSim" method="get"
+					action="similarity_results.php" class="formulario">
+					<input type="text" style="display: none" id="marSmartsSim"
+						name="chemical" size="50"><br /> <br /> 1. Select one kind of
+					fingerprints (Morgan (ECFP-like) by default): <select
+						name="fingerprint" id="fingerprint">
+						<option value="Morgan" selected="selected" class="listheader">Morgan</option>
+						<option value="MorganFeat" class="listheader">Morgan features</option>
+						<option value="Torsion" class="listheader">Topological-Torsion</option>
+						<option value="Atom" class="listheader">Atom-Pair</option>
+						<option value="RDKit" class="listheader">RDKit</option>
+						<option value="Layered" class="listheader">Layered (exp)</option>
+						<option value="MACCS" class="listheader">MACCS</option>
+					</select><br /> <br /> 2. Select one similarity coefficient
+					(Tanimoto by default): <select name="similarity" id="similarity">
+						<option value="Tanimoto" selected="selected" class="listheader">Tanimoto</option>
+						<option value="Dice" class="listheader">Dice</option>
+					</select><br /> <br /> <input type="hidden" name="format"
+						value="SMARTS" /> <input TYPE="submit" align="left" VALUE="Search"
+						onClick="export_mol('sim');">
+				</form>
+			</div>
 
 			<div style="display: none" id="entradaSim">
 				<p>
@@ -144,6 +188,8 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 						<option value="MorganFeat" class="listheader">Morgan features</option>
 						<option value="Torsion" class="listheader">Topological-Torsion</option>
 						<option value="Atom" class="listheader">Atom-Pair</option>
+						<option value="RDKit" class="listheader">RDKit</option>
+						<option value="Layered" class="listheader">Layered (exp)</option>
 						<option value="MACCS" class="listheader">MACCS</option>
 					</select><br /> <br /> 3. Select one similarity coefficient
 					(Tanimoto by default): <select name="similarity" id="similarity">
@@ -166,7 +212,6 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 						<option value="MorganFeat" class="listheader">Morgan features</option>
 						<option value="Torsion" class="listheader">Topological-Torsion</option>
 						<option value="Atom" class="listheader">Atom-Pair</option>
-						<option value="MACCS" class="listheader">MACCS</option>
 					</select><br /> <br /> 3. Select one similarity coefficient
 					(Tanimoto by default): <select name="similarity" id="similarity">
 						<option value="Tanimoto" selected="selected" class="listheader">Tanimoto</option>
@@ -188,7 +233,6 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 						<option value="MorganFeat" class="listheader">Morgan features</option>
 						<option value="Torsion" class="listheader">Topological-Torsion</option>
 						<option value="Atom" class="listheader">Atom-Pair</option>
-						<option value="MACCS" class="listheader">MACCS</option>
 					</select><br /> <br /> 3. Select one similarity coefficient
 					(Tanimoto by default): <select name="similarity" id="similarity">
 						<option value="Tanimoto" selected="selected" class="listheader">Tanimoto</option>
@@ -204,39 +248,6 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 
 		<!-- Similarity End -->
 
-		<? jsme(); ?>
-		<div style="display: none; text-align: center;" id="marvin">
-				<form name='jsmeSketchSub' method='get' action='substructure_results.php' class='formulario'>
-				<input type='text' style='display: none' id='jsmeSmartsSub' name='chemical' size='50'>
-				<br/>1. Select one kind of search: 
-				<input type='radio' name='match' checked='checked' id='subSub' value='subs' /> Substructure
-				<input type='radio' name='match' id='exSub' value='exact' /> Exact <br/> <br/>
-				<input type='hidden' name='format' value='SMILES'/>
-				<input TYPE='submit' align='left' VALUE='Search' onClick='getSmilesSub();'>
-				</form>
-		</div>
-		
-		<div style="display:none; text-align: center;" id="marvinSim">
-				<form name='jsmeSketchSim' method='get' action='similarity_results.php' class='formulario'>
-					<input type='text' style='display: none' id='jsmeSmartsSim' name='chemical' size='50'>
-					<br/>1. Select one kind of fingerprints (Morgan (ECFP-like) by default): 
-					<select
-						name='fingerprint' id='fingerprint'>
-						<option value='Morgan' selected='selected' class='listheader'>Morgan</option>
-						<option value='MorganFeat' class='listheader'>Morgan features</option>
-						<option value='Torsion' class='listheader'>Topological-Torsion</option>
-						<option value='Atom' class='listheader'>Atom-Pair</option>
-						<option value='MACCS' class='listheader'>MACCS</option>
-					</select>
-					<br/><br/> 2. Select one similarity coefficient (Tanimoto by default): 
-					<select name='similarity' id='similarity'>
-						<option value='Tanimoto' selected='selected' class='listheader'>Tanimoto</option>
-						<option value='Dice' class='listheader'>Dice</option>
-					</select>
-					<input type='hidden' name='format' value='SMILES'/>
-					<br/><br/><input TYPE='submit' align='left' VALUE='Search' onClick='getSmilesSim();'>
-				</form>
-		</div>
 	</section>
 
 </div>

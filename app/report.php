@@ -57,9 +57,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
 			echo "<p><img src='dispatcher.php/molecule_image/$query' width='250' height='250'/></p>";
 			echo "<h5>Bioactivity data</h5>";
 			
-			$db = pg_connect("user=$db_user dbname=$db_name host=/var/run/postgresql");
- 			if (!$db) {die("Error in connection: " . pg_last_error());}
-			
+
 			// execute query
  			$sql = "SELECT a.assay_id, ac.standard_type, ac.standard_relation, ac.standard_value, ac.standard_units, td.chembl_id FROM compound_records cr, molecule_dictionary md, 
 						target_dictionary td, assays a, activities ac WHERE 

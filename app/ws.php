@@ -54,7 +54,7 @@ URL: http://www.opensource.org/licenses/apache2.0.php
     	     <h3>Similarity Searches</h3>    			
 				<p>
 				In this section you can find examples to run a simple URI query to retrieve similarity searches, selecting different class of fingerprints and similarity coefficients.<br/>
-				<b>Categories:</b> action, smiles, smarts, fingerprint (Morgan, MorganFeat, Torsion, Atom, MACCS), 	method (Tanimoto, Dice).				
+				<b>Categories:</b> action, smiles, smarts, fingerprint (Morgan, MorganFeat, Torsion, Atom, RDKit, Layered, MACCS), 	method (Tanimoto, Dice).				
 				</p>
 				
 				<h5>SMILES Based</h5>

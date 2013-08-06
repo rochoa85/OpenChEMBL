@@ -93,10 +93,10 @@ function similarity($moltest, $finger, $method)
  	while ($row = pg_fetch_array($result)) {
  		if (empty($row[molregno])){
  			//echo '<center><b>No Results, please search again</b></center>';
- 			$info = array("Molregno" => "NO", "ChEMBL_ID" => "NO", "SMILES" => "NO", "Similarity" => "NO");
+ 			$info = array("Molregno" => "NO", "ChEMBL_ID" => "NO", "Similarity" => "NO");
  		}
  		else{
- 			$info = array("Molregno" => "$row[molregno]", "ChEMBL_ID" => "$row[chembl_id]", "SMILES" => "$row[m]",  "Similarity" => "$row[sim]");
+ 			$info = array("Molregno" => "$row[molregno]", "ChEMBL_ID" => "$row[chembl_id]", "Similarity" => "$row[sim]");
  			//echo "<b>Molecule:</b> " . $row[m] . "<br/>";
  		}
  		array_push($total, $info);

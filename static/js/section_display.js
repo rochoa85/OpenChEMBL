@@ -3,106 +3,116 @@
 /////////////////////////////////////////////////////////
 
 $(document).ready(function() {
-	//$("input[name=chembl]:radio").attr("checked", false);
-	//$("input[name=chemblSim]:radio").attr("checked", false);
+	$("input[name=chembl]:radio").attr("checked", false);
+	$("input[name=chemblSim]:radio").attr("checked", false);
 	
 	$("#structure-search-type option:first").attr('selected', 'selected' );
 	$("#substructure-search-input option:first").attr('selected', 'selected' );
 	$("#similarity-search-input option:first").attr('selected', 'selected' );
+	$("#property-search-input option:first").attr('selected', 'selected' );
 	
 	$('#substructure-input-div').hide();
 	$('#similarity-input-div').hide();
 	
+	
 	$('#structure-search-type').change(function(){
 		if(this.value === 'sub'){
 			$('#substructure-input-div').show();
-			$('#similarity-input-div').hide();
-			document.getElementById("container").style.display="none";
-			document.getElementById("marvin").style.display="none";			
-			document.getElementById("marvinSim").style.display="none";			
+			$('#similarity-input-div').hide();			
 		} else if(this.value === 'sim'){
 			$('#substructure-input-div').hide();
-			$('#similarity-input-div').show();
-			document.getElementById("container").style.display="none";
-			document.getElementById("marvin").style.display="none";			
-			document.getElementById("marvinSim").style.display="none";
+			$('#similarity-input-div').show();			
 		}
+		$("#structure-search-type option:first").attr('selected', 'selected' );
 	})
 
-	$('#substructure-search-input').change(function(){
+	$('#property-search-input').change(function(){
 		if(this.value === 'substructure-draw'){
-	  		document.getElementById("marvin").style.display="block";
+	  		document.getElementById("struct_sketch_property").style.display="block";
+			
+	  		if(!document.JSME_PROP){
+	            jsmeApplet = new JSApplet.JSME("struct_sketch_prop", "620px", "480px", {
+		            "options" : "query,hydrogens"
+	            });
+	            document.JSME_PROP = jsmeApplet;
+	  		}
+	  		
 	  		document.getElementById("entrada").style.display="none";
 	  		document.getElementById("stringMOL").style.display="none";
 			document.getElementById("stringSMARTS").style.display="none";
-			document.getElementById("stringSMILES").style.display="none";
-			document.getElementById("container").style.display="block";
-			document.getElementById("marvinSim").style.display="none";
-			
+			document.getElementById("stringSMILES").style.display="none";		
 		} else if(this.value === 'substructure-upload'){
-	  		document.getElementById("marvin").style.display="none";
-	  		document.getElementById("entrada").style.display="block";
-	  		document.getElementById("container").style.display="none";
-	  		document.getElementById("marvinSim").style.display="none";
+	  		document.getElementById("struct_sketch_property").style.display="none";
+	  		document.getElementById("entrada").style.display="block";		
 		}
+		$("#property-search-input option:first").attr('selected', 'selected' );
+	})
+	
+	$('#substructure-search-input').change(function(){
+		if(this.value === 'substructure-draw'){
+	  		document.getElementById("substructure_section").style.display="block";
+			
+	  		if(!document.JSME_SUB){
+	            jsmeApplet = new JSApplet.JSME("struct_sketch_sub", "620px", "480px", {
+		            "options" : "query,hydrogens"
+	            });
+	            document.JSME_SUB = jsmeApplet;
+	  		}
+	  		document.getElementById("entrada").style.display="none";
+	  		document.getElementById("stringMOL").style.display="none";
+			document.getElementById("stringSMARTS").style.display="none";
+			document.getElementById("stringSMILES").style.display="none";		
+		} else if(this.value === 'substructure-upload'){
+	  		document.getElementById("substructure_section").style.display="none";
+	  		document.getElementById("entrada").style.display="block";		
+		}
+		$("#substructure-search-input option:first").attr('selected', 'selected' );
 	})
 	
 	$('#similarity-search-input').change(function(){
 		if(this.value === 'similarity-draw'){
-	  		document.getElementById("marvinSim").style.display="block";
+	  		document.getElementById("similarity_section").style.display="block";
+	  		
+	  		if(!document.JSME_SIM){
+	            jsmeApplet = new JSApplet.JSME("struct_sketch_sim", "620px", "480px", {
+		            "options" : "query,hydrogens"
+	            });
+	            document.JSME_SIM = jsmeApplet;
+	  		}
+	  		
 	  		document.getElementById("entradaSim").style.display="none";
 	  		document.getElementById("stringMOLSim").style.display="none";
 			document.getElementById("stringSMARTSSim").style.display="none";
-			document.getElementById("stringSMILESSim").style.display="none";
-			document.getElementById("container").style.display="block";
-			document.getElementById("marvin").style.display="none";				
+			document.getElementById("stringSMILESSim").style.display="none";		
 		} else if(this.value === 'similarity-upload'){
-	  		document.getElementById("marvinSim").style.display="none";
-	  		document.getElementById("entradaSim").style.display="block";
-	  		document.getElementById("container").style.display="none";
-	  		document.getElementById("marvin").style.display="none";
+	  		document.getElementById("similarity_section").style.display="none";
+	  		document.getElementById("entradaSim").style.display="block";		
 		}
-	})
-	
-	$("#property-input option:first").attr('selected', 'selected' );	
-	
-	$('#property-input').change(function(){
-		if(this.value === 'property-draw'){
-	  		document.getElementById("marvinPro").style.display="block";
-	  		document.getElementById("entradaPro").style.display="none";
-	  		document.getElementById("stringMOLPro").style.display="none";
-			document.getElementById("stringSMARTSPro").style.display="none";
-			document.getElementById("stringSMILESPro").style.display="none";
-			document.getElementById("container").style.display="block";		
-		} else if(this.value === 'property-upload'){
-	  		document.getElementById("marvinPro").style.display="none";
-	  		document.getElementById("entradaPro").style.display="block";
-	  		document.getElementById("container").style.display="none";		
-		}
-	})
-	
-	$("#assayCliffsearch option:first").attr('selected', 'selected' );	
-	
-	$('#assayCliffsearch').change(function(){
-		if(this.value === 'assayYes'){
-	  		document.getElementById("assayCliffform").style.display="block";		
-		} else if(this.value === 'assayNo'){
-	  		document.getElementById("assayCliffform").style.display="none";		
-		}
-	})
-	
-	$("#targetCliffsearch option:first").attr('selected', 'selected' );	
-	
-	$('#targetCliffsearch').change(function(){
-		if(this.value === 'targetYes'){
-	  		document.getElementById("targetCliffform").style.display="block";		
-		} else if(this.value === 'targetNo'){
-	  		document.getElementById("targetCliffform").style.display="none";		
-		}
-	})
-	
+		$("#similarity-search-input option:first").attr('selected', 'selected' );
+	})	
 });
 
+function export_mol(type) {
+	if(type == 'sub'){
+		var data = document.JSME_SUB.smiles();
+		if (data){
+			document.getElementById("formSpecialSub").value = "SMILES";
+			document.getElementById('marSmartsSub').value = data;
+		}			
+	}else if (type == 'sim'){
+		var data = document.JSME_SIM.smiles();
+		if (data){
+			document.getElementById('marSmartsSim').value = data;
+		}	
+	}else if (type == 'prop'){
+		var data = document.JSME_PROP.smiles();
+		if (data){
+			document.getElementById('marSmarts').value = data;
+		}	
+	} else {
+		alert('Opps unexpected export type');
+	}
+}
 
 function despliegaInformacion(divinfo,pagina)
 {
@@ -141,30 +151,6 @@ function string(){
 		document.getElementById("stringSMILES").style.display="none";
 	}
 }
-
-function stringPro(){
-	if(document.getElementById("format").value=="SMILES"){
-		document.getElementById("stringSMILESPro").style.display="block";
-		document.getElementById("stringSMARTSPro").style.display="none";
-		document.getElementById("stringMOLPro").style.display="none";
-	}
-	else if(document.getElementById("format").value=="ARTS"){	
-		document.getElementById("stringSMARTSPro").style.display="block";
-		document.getElementById("stringMOLPro").style.display="none";
-		document.getElementById("stringSMILESPro").style.display="none";	
-	}
-	else if(document.getElementById("format").value=="MOL"){
-		document.getElementById("stringMOLPro").style.display="block";
-		document.getElementById("stringSMARTSPro").style.display="none";
-		document.getElementById("stringSMILESPro").style.display="none";
-	}
-	else if(document.getElementById("format").value=="None"){
-		document.getElementById("stringMOLPro").style.display="none";
-		document.getElementById("stringSMARTSPro").style.display="none";
-		document.getElementById("stringSMILESPro").style.display="none";
-	}
-}
-
 
 function Simstring(){
 	if(document.getElementById("formatSim").value=="SMILESSim"){
